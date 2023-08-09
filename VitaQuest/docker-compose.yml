@@ -6,3 +6,20 @@ services:
     build:
       context: .
       dockerfile: VitaQuest/Dockerfile
+    ports:
+      - "443:443"
+      - "80:80"
+  SQLServer-db:
+    container_name: SQLServer-db
+    image: mcr.microsoft.com/mssql/server
+    user: root
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Str0ngPa$$w0rd"
+    volumes:
+      - sqlServerDB:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+volumes:
+    sqlServerDB:    
