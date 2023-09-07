@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddServerSideBlazor();//Blazor app, can mix and match with razor page or even mvc
 builder.Services.AddSingleton<WeatherForecastService>();
 //https://github.com/dotnet/aspnetcore/issues/38212
 {
@@ -30,7 +30,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.MapBlazorHub();
+app.MapBlazorHub();//Map blazor SignalR Hub server to client.
 app.MapFallbackToPage("/_Host");
 
 app.Run();
