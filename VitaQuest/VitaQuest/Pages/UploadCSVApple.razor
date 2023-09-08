@@ -1,13 +1,42 @@
 ﻿@page "/UploadCSV"
-
 <PageTitle>Upload CSV</PageTitle>
 
-<h3> Read In CSV </h3>
-<InputFile OnChange="@LoadFiles" multiple />
+<h3>
+    Read In CSV
+</h3>
+
+
+<p>Upload Apple Health CSV</p>
+<InputFile @OnChange="SingleAppleHealthUploadAsync" />
+
+<p>Upload Sleep CSV</p>
+<InputFile @OnChange="SingleSleepUploadAsync" />
+
+<button type="submit" @OnClick="SubmitFilesAsync">Upload</button>
 
 @code {
-    private void LoadFiles(InputFileChangeEventArgs e)
+    // this runs on the server
+    private byte[] appleHealthData = new byte[] { };
+    private byte[] sleepData = new byte[] { };
+
+    private async Task SingleAppleHealthUploadAsync(InputFileChangeEventArgs e)
     {
-        
+        MemoryStream ms = new MemoryStream();
+        await e.File.OpenReadStream().CopyToAsync(ms);
+        //save the bytes
+        appleHealthData = ms.ToArray();
+    }
+
+    private async Task SingleSleepUploadAsync(InputFileChangeEventArgs e)
+    {
+        MemoryStream ms = new MemoryStream();
+        await e.File.OpenReadStream().CopyToAsync(ms);
+        //save the bytes
+        sleepData = ms.ToArray();
+    }
+
+    private async Task SubmitFilesAsync(EventArgs e)
+    {
+        //tbh pass to service
     }
 }
