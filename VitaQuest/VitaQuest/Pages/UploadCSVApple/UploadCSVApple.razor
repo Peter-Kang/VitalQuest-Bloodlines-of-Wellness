@@ -1,25 +1,25 @@
 ﻿@page "/UploadCSV"
 <PageTitle>Upload CSV</PageTitle>
-
+@inject VitaQuest.Services.CSVDataService CSVService
 <h3>
     Read In CSV
 </h3>
 
 
 <p>Upload Apple Health CSV</p>
-<InputFile OnChange="@SingleAppleHealthUploadAsync" />
+<InputFile OnChange="@SingleFileAppleHealthUploadAsync" />
 
 <p>Upload Sleep CSV</p>
-<InputFile OnChange="@SingleSleepUploadAsync" />
+<InputFile OnChange="@SingleFileSleepUploadAsync" />
 
-<button type="submit" @OnClick="SubmitFilesAsync">Upload</button>
+<button @OnClick="SubmitFilesAsync">Upload</button>
 
 @code {
     // this runs on the server
     private byte[] appleHealthData = new byte[] { };
     private byte[] sleepData = new byte[] { };
 
-    private async Task SingleAppleHealthUploadAsync(InputFileChangeEventArgs e)
+    private async Task SingleFileAppleHealthUploadAsync(InputFileChangeEventArgs e)
     {
         MemoryStream ms = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(ms);
@@ -27,7 +27,7 @@
         appleHealthData = ms.ToArray();
     }
 
-    private async Task SingleSleepUploadAsync(InputFileChangeEventArgs e)
+    private async Task SingleFileSleepUploadAsync(InputFileChangeEventArgs e)
     {
         MemoryStream ms = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(ms);
@@ -35,8 +35,17 @@
         sleepData = ms.ToArray();
     }
 
-    private async Task SubmitFilesAsync(EventArgs e)
+    private async Task SubmitFilesAsync()
     {
-        //tbh pass to service
+        // pass to service
+        if (appleHealthData.Length >0)
+        {   //send dont wait
+            CSVService.processAppleFitnessDataAsync(appleHealthData);
+        }
+
+        if (sleepData.Length >0)
+        {
+            CSVService.processAutoSleepDataAsync(sleepData);
+        }
     }
 }

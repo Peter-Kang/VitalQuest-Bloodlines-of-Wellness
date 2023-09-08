@@ -1,4 +1,6 @@
-namespace VitaQuest.Data
+using VitaQuest.Data;
+
+namespace VitaQuest.Services
 {
     public class WeatherForecastService
     {
