@@ -7,10 +7,10 @@
 
 
 <p>Upload Apple Health CSV</p>
-<InputFile @OnChange="SingleAppleHealthUploadAsync" />
+<InputFile OnChange="@SingleAppleHealthUploadAsync" />
 
 <p>Upload Sleep CSV</p>
-<InputFile @OnChange="SingleSleepUploadAsync" />
+<InputFile OnChange="@SingleSleepUploadAsync" />
 
 <button type="submit" @OnClick="SubmitFilesAsync">Upload</button>
 
