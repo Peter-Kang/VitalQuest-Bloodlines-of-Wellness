@@ -17,6 +17,8 @@ services:
     user: root
     ports:
       - "1433:1433"
+    expose:
+      - "1433" 
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "Str0ngPa$$w0rd"
