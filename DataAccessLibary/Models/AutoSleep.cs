@@ -1,4 +1,4 @@
-﻿namespace VitaQuest.Models
+﻿namespace DataAccessLibary
 {
     public class AutoSleepDay
     {

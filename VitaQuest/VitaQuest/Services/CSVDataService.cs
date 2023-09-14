@@ -28,22 +28,19 @@ namespace VitaQuest.Services
                     string[]? fields = csvParse.ReadFields();
                     if (fields != null) 
                     {
-                        foreach (string field in fields)
-                        {
-                            //convert csv data into data structure
-                            AppleFitnessDay day = new AppleFitnessDay();
-                            day.DateTimeOfInstance = DateTime.Parse(fields[0]);
-                            day.HeartRateMin = int.Parse(fields[1]);
-                            day.HeartRateMax = int.Parse(fields[2]);
-                            day.HeartRateAverage = int.Parse(fields[3]);
-                            day.HeartRateResting = int.Parse(fields[4]);
-                            day.HeartRateActive = int.Parse(fields[5]);
-                            day.HeartRateVariability = int.Parse(fields[6]);
-                            day.StepCount = int.Parse(fields[10]);
-                            day.CaloriesBurnt = int.Parse(fields[12]);
-                            //add it
-                            appleFitnessDays.Add(day);
-                        }
+                        //convert csv data into data structure
+                        AppleFitnessDay day = new AppleFitnessDay();
+                        day.DateTimeOfInstance = DateTime.Parse(fields[0]);
+                        day.HeartRateMin = int.Parse(fields[1]);
+                        day.HeartRateMax = int.Parse(fields[2]);
+                        day.HeartRateAverage = int.Parse(fields[3]);
+                        day.HeartRateResting = int.Parse(fields[4]);
+                        day.HeartRateActive = int.Parse(fields[5]);
+                        day.HeartRateVariability = int.Parse(fields[6]);
+                        day.StepCount = int.Parse(fields[10]);
+                        day.CaloriesBurnt = int.Parse(fields[12]);
+                        //add it
+                        appleFitnessDays.Add(day);
                     }
                 }
                 if (appleFitnessDays.Count >0) 

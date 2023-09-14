@@ -51,7 +51,7 @@ namespace DataAccessLibary
                 BEGIN
                     CREATE TABLE APPLE_FITNESS (
                         [ID_APPLE_FITNESS] [int] IDENTITY(0,1) PRIMARY KEY NOT NULL,
-                        [DATE_OF_INSTANCE] [date] NOT NULL,
+                        [DATE_OF_INSTANCE] [date] NOT NULL UNIQUE,
                         [HEART_RATE_MIN] [INT] NOT NULL,
                         [HEART_RATE_MAX] [INT] NOT NULL,
                         [HEART_RATE_AVERAGE] [INT] NOT NULL,
@@ -76,7 +76,7 @@ namespace DataAccessLibary
                 BEGIN
                     CREATE TABLE AUTO_SLEEP (
                     [ID_AUTO_SLEEP] [int] IDENTITY(0,1) PRIMARY KEY NOT NULL,
-                    [DATETIME_OF_INSTANCE] [datetime] NOT NULL,
+                    [DATETIME_OF_INSTANCE] [datetime] NOT NULL UNIQUE,
                     [FROM_DATE] [date],
                     [TO_DATE] [date],
                     [BED_TIME] [datetime],
