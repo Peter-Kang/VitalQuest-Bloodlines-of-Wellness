@@ -1,5 +1,8 @@
 version: '3.4'
 
+networks:
+    VitaQuestNetwork:
+
 services:
   vitaquest:
     image: ${DOCKER_REGISTRY-}vitaquest
@@ -10,7 +13,9 @@ services:
         - SQLServer-db
     ports:
       - "443:443"
-      - "80:80"
+      - "8001:80"
+    networks:
+      - VitaQuestNetwork
   SQLServer-db:
     container_name: SQLServer-db
     image: mcr.microsoft.com/mssql/server
@@ -25,5 +30,7 @@ services:
     volumes:
       - sqlServerDB:/var/opt/mssql/data
       - ./log:/var/opt/mssql/log
+    networks:
+      - VitaQuestNetwork
 volumes:
     sqlServerDB:    

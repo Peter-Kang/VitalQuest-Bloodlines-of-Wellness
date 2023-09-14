@@ -4,7 +4,7 @@ namespace DataAccessLibary
 {
     public class SQLDataAccess
     {
-        private const string m_CONNECTIONSTRING = "Data Source=\"localhost, 1433\";User ID=SA;Password='Str0ngPa$w0rd';Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        private const string m_CONNECTIONSTRING = "Data Source=\"SQLServer-db \";User ID=SA;Password='Str0ngPa$w0rd';Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
         protected SqlConnection m_SQLConnection { get; set; }
 

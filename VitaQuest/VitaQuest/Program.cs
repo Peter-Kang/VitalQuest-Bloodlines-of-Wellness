@@ -11,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();//Blazor app, can mix and match with razor page or even mvc
 builder.Services.AddSingleton<WeatherForecastService>();
 
+
 DataBaseSetupService service = new DataBaseSetupService();
 service.Setup();
 
