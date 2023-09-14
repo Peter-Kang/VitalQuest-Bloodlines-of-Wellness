@@ -12,30 +12,32 @@
 <p>Upload Sleep CSV</p>
 <InputFile OnChange="@SingleFileSleepUploadAsync" />
 
-<button @OnClick="SubmitFilesAsync">Upload</button>
+<button @onclick="@SubmitFilesAsync">Upload</button>
 
 @code {
     // this runs on the server
-    private byte[] appleHealthData = new byte[] { };
-    private byte[] sleepData = new byte[] { };
+    private string appleHealthData = "";
+    private string sleepData = "";
 
     private async Task SingleFileAppleHealthUploadAsync(InputFileChangeEventArgs e)
     {
         MemoryStream ms = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(ms);
+        string outputFileString = System.Text.Encoding.UTF8.GetString(ms.ToArray());
         //save the bytes
-        appleHealthData = ms.ToArray();
+        appleHealthData = outputFileString;
     }
 
     private async Task SingleFileSleepUploadAsync(InputFileChangeEventArgs e)
     {
         MemoryStream ms = new MemoryStream();
         await e.File.OpenReadStream().CopyToAsync(ms);
+        string outputFileString = System.Text.Encoding.UTF8.GetString(ms.ToArray());
         //save the bytes
-        sleepData = ms.ToArray();
+        sleepData = outputFileString;
     }
 
-    private async Task SubmitFilesAsync()
+    private void SubmitFilesAsync()
     {
         // pass to service
         if (appleHealthData.Length >0)
