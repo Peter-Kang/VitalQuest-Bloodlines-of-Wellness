@@ -6,7 +6,7 @@ namespace DataAccessLibary
     {
         private const string m_CONNECTIONSTRING = "Data Source=\"localhost, 1433\";User ID=SA;Password='Str0ngPa$w0rd';Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
-        private SqlConnection m_SQLConnection { get; set; }
+        protected SqlConnection m_SQLConnection { get; set; }
 
         public SQLDataAccess()
         {
@@ -46,36 +46,33 @@ namespace DataAccessLibary
         private void AppleFitnessTableInit() 
         {
             string table_create_query =
-            @"
-               USE VITAQUEST
-               IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'APPLE_FITNESS')
-               BEGIN
-                   CREATE TABLE APPLE_FITNESS (
-                     [ID_APPLE_FITNESS] [int] IDENTITY(0,1) PRIMARY KEY NOT NULL,
-                     [DATE_OF_INSTANCE] [date] NOT NULL,
-                     [HEART_RATE_MIN] [INT] NOT NULL,
-                     [HEART_RATE_MAX] [INT] NOT NULL,
-                     [HEART_RATE_AVERAGE] [INT] NOT NULL,
-                     [HEART_RATE_RESTING] [INT] NOT NULL,
-                     [HEART_RATE_ACTIVE] [INT] NOT NULL,
-                     [HEART_RATE_VARIABILITY] [INT] NOT NULL,
-                     [STEP_COUNT][INT] NOT NULL,
-                     [CALORIES_BURNT][INT] NOT NULL
+            @"USE VITAQUEST
+                IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'APPLE_FITNESS')
+                BEGIN
+                    CREATE TABLE APPLE_FITNESS (
+                        [ID_APPLE_FITNESS] [int] IDENTITY(0,1) PRIMARY KEY NOT NULL,
+                        [DATE_OF_INSTANCE] [date] NOT NULL,
+                        [HEART_RATE_MIN] [INT] NOT NULL,
+                        [HEART_RATE_MAX] [INT] NOT NULL,
+                        [HEART_RATE_AVERAGE] [INT] NOT NULL,
+                        [HEART_RATE_RESTING] [INT] NOT NULL,
+                        [HEART_RATE_ACTIVE] [INT] NOT NULL,
+                        [HEART_RATE_VARIABILITY] [INT] NOT NULL,
+                        [STEP_COUNT][INT] NOT NULL,
+                        [CALORIES_BURNT][INT] NOT NULL
                     );
-               END
-            ";
+                END";
             SqlCommand table_create_command = new SqlCommand(table_create_query, m_SQLConnection);
             m_SQLConnection.Open();
-            table_create_command.ExecuteScalar(); // dont need results for now
+            table_create_command.ExecuteReader(); // dont need results for now
             m_SQLConnection.Close();
         }
 
         private void AutoSleepTableInit() 
         {
             string table_create_query =
-            @"
-                USE VITAQUEST
-                IF NOT EXISTS (SELECT 1 FROM SYS.DATABASES WHERE NAME = 'AUTO_SLEEP')
+            @"USE VITAQUEST
+                IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME =  'AUTO_SLEEP')
                 BEGIN
                     CREATE TABLE AUTO_SLEEP (
                     [ID_AUTO_SLEEP] [int] IDENTITY(0,1) PRIMARY KEY NOT NULL,
@@ -109,11 +106,10 @@ namespace DataAccessLibary
                     [SPO2_MIN][INT],
                     [SPO2_MAX][INT]
                     );
-                END
-            ";
+                END";
             SqlCommand table_create_command = new SqlCommand(table_create_query, m_SQLConnection);
             m_SQLConnection.Open();
-            table_create_command.ExecuteScalar(); // dont need results for now
+            table_create_command.ExecuteNonQuery(); // dont need results for now
             m_SQLConnection.Close();
         }
     }
