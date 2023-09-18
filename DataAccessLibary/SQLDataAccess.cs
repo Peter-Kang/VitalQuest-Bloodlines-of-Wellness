@@ -52,14 +52,14 @@ namespace DataAccessLibary
                     CREATE TABLE APPLE_FITNESS (
                         [ID_APPLE_FITNESS] [int] IDENTITY(0,1) PRIMARY KEY NOT NULL,
                         [DATE_OF_INSTANCE] [date] NOT NULL UNIQUE,
-                        [HEART_RATE_MIN] [INT] NOT NULL,
-                        [HEART_RATE_MAX] [INT] NOT NULL,
-                        [HEART_RATE_AVERAGE] [INT] NOT NULL,
-                        [HEART_RATE_RESTING] [INT] NOT NULL,
-                        [HEART_RATE_ACTIVE] [INT] NOT NULL,
-                        [HEART_RATE_VARIABILITY] [INT] NOT NULL,
-                        [STEP_COUNT][INT] NOT NULL,
-                        [CALORIES_BURNT][INT] NOT NULL
+                        [HEART_RATE_MIN] [INT],
+                        [HEART_RATE_MAX] [INT],
+                        [HEART_RATE_AVERAGE] [INT],
+                        [HEART_RATE_RESTING] [INT],
+                        [HEART_RATE_ACTIVE] [INT],
+                        [HEART_RATE_VARIABILITY] [INT],
+                        [STEP_COUNT][INT],
+                        [CALORIES_BURNT][INT]
                     );
                 END";
             SqlCommand table_create_command = new SqlCommand(table_create_query, m_SQLConnection);
