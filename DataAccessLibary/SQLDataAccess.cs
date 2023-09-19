@@ -98,10 +98,10 @@ namespace DataAccessLibary
                     [DAY_BPM_AVERAGE][float],
                     [WAKING_BPM][float],
                     [WAKING_BPM_AVERAGE][float],
-                    [HRV][float],
-                    [HRV_AVERAGE][float],
+                    [HRV][INT],
+                    [HRV_AVERAGE][INT],
                     [SLEEP_HRV][INT],
-                    [SLEEP_HRV_AVERAGE][float],
+                    [SLEEP_HRV_AVERAGE][INT],
                     [SPO2_AVERAGE][float],
                     [SPO2_MIN][INT],
                     [SPO2_MAX][INT]

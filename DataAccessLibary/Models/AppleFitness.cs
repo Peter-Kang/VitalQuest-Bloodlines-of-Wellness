@@ -28,7 +28,7 @@ namespace DataAccessLibary
         }
         public void InitializeAppleFitnessFromID(in int id) 
         {
-            string get_row_by_id =
+            const string get_row_by_id =
                 @"USE VITAQUEST
                 SELECT TOP 1
                     ID_APPLE_FITNESS,
@@ -52,19 +52,46 @@ namespace DataAccessLibary
             init_command.Connection.Close();
             if (result.Rows.Count > 0 ) 
             {//read in data
-                AppleFitnessID = (int)(result.Rows[0]["ID_APPLE_FITNESS"]);
-                DateTimeOfInstance = (DateTime)(result.Rows[0]["DATE_OF_INSTANCE"]);
-                HeartRateMin = (int)(result.Rows[0]["HEART_RATE_MIN"]);
-                HeartRateMax = (int)(result.Rows[0]["HEART_RATE_MAX"]);
-                HeartRateAverage = (int)(result.Rows[0]["HEART_RATE_AVERAGE"]);
-                HeartRateResting = (int)(result.Rows[0]["HEART_RATE_RESTING"]);
-                HeartRateActive = (int)(result.Rows[0]["HEART_RATE_ACTIVE"]);
-                HeartRateVariability = (int)(result.Rows[0]["HEART_RATE_VARIABILITY"]);
-                StepCount = (int)(result.Rows[0]["STEP_COUNT"]);
-                CaloriesBurnt = (int)(result.Rows[0]["CALORIES_BURNT"]);
+                try
+                {
+                    AppleFitnessID = (int)(result.Rows[0]["ID_APPLE_FITNESS"]);
+                    DateTimeOfInstance = (DateTime)(result.Rows[0]["DATE_OF_INSTANCE"]);
+                    HeartRateMin = (int)(result.Rows[0]["HEART_RATE_MIN"]);
+                    HeartRateMax = (int)(result.Rows[0]["HEART_RATE_MAX"]);
+                    HeartRateAverage = (int)(result.Rows[0]["HEART_RATE_AVERAGE"]);
+                    HeartRateResting = (int)(result.Rows[0]["HEART_RATE_RESTING"]);
+                    HeartRateActive = (int)(result.Rows[0]["HEART_RATE_ACTIVE"]);
+                    HeartRateVariability = (int)(result.Rows[0]["HEART_RATE_VARIABILITY"]);
+                    StepCount = (int)(result.Rows[0]["STEP_COUNT"]);
+                    CaloriesBurnt = (int)(result.Rows[0]["CALORIES_BURNT"]);
+                }
+                catch (Exception ex) 
+                {
+                    Console.WriteLine("Error in InitializeAppleFitnessFromID(in int id)\n" +ex.ToString());
+                }
             }
         }
 
+        public AppleFitnessDay(in DataRow row) : this() 
+        {
+            try
+            {
+                AppleFitnessID          = (int)     (row["ID_APPLE_FITNESS"]);
+                DateTimeOfInstance      = (DateTime)(row["DATE_OF_INSTANCE"]);
+                HeartRateMin            = (int)     (row["HEART_RATE_MIN"]);
+                HeartRateMax            = (int)     (row["HEART_RATE_MAX"]);
+                HeartRateAverage        = (int)     (row["HEART_RATE_AVERAGE"]);
+                HeartRateResting        = (int)     (row["HEART_RATE_RESTING"]);
+                HeartRateActive         = (int)     (row["HEART_RATE_ACTIVE"]);
+                HeartRateVariability    = (int)     (row["HEART_RATE_VARIABILITY"]);
+                StepCount               = (int)     (row["STEP_COUNT"]);
+                CaloriesBurnt           = (int)     (row["CALORIES_BURNT"]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error in AppleFitnessDay(in DataRow row)\n" + ex.ToString());
+            }
+        }
     }
 
     public class AppleFitness :SQLDataAccess
@@ -78,8 +105,8 @@ namespace DataAccessLibary
                 //Inital
                 StringBuilder query = new StringBuilder("USE VITAQUEST INSERT INTO dbo.APPLE_FITNESS (DATE_OF_INSTANCE, HEART_RATE_MIN,HEART_RATE_MAX,HEART_RATE_AVERAGE,HEART_RATE_RESTING,HEART_RATE_ACTIVE,HEART_RATE_VARIABILITY,STEP_COUNT, CALORIES_BURNT) VALUES ");
                 bool first = true;
-                //concseculative
-                foreach(AppleFitnessDay day in appleFitnessDays) 
+                //iterative
+                foreach (AppleFitnessDay day in appleFitnessDays) 
                 {
                     if (first)
                     {
