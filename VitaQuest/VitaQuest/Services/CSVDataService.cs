@@ -1,5 +1,6 @@
 ﻿using DataAccessLibary;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections;
 using VitaQuest.Data;
@@ -75,38 +76,38 @@ namespace VitaQuest.Services
                     if (fields != null)
                     {
                         //convert csv data into data structure
-                        AutoSleepDay day = new AutoSleepDay()
+                        AutoSleepDay day = new AutoSleepDay();
                         {
-                            DateTimeOfInstance = Convert.ToDateTime(fields[0]),
-                            FromDate = DateOnly.FromDateTime(Convert.ToDateTime(fields[1])),
-                            ToDate = DateOnly.FromDateTime(Convert.ToDateTime(fields[2])),
-                            BedTime = Convert.ToDateTime(fields[3]),
-                            WakeTime = Convert.ToDateTime(fields[4]),
-                            InBed = TimeOnly.FromDateTime(Convert.ToDateTime(fields[5])),
-                            Awake = TimeOnly.FromDateTime(Convert.ToDateTime(fields[6])),
+                            day.DateTimeOfInstance  = Convert.ToDateTime(fields[0]);
+                            day.FromDate            = DateOnly.FromDateTime(Convert.ToDateTime(fields[1]));
+                            day.ToDate              = DateOnly.FromDateTime(Convert.ToDateTime(fields[2]));
+                            day.BedTime             = Convert.ToDateTime(DataDefaultUtils.StringDefault(fields[3],"0"));
+                            day.WakeTime            = Convert.ToDateTime(DataDefaultUtils.StringDefault(fields[4],"0"));
+                            day.InBed               = fields[5].IsNullOrEmpty() ? new TimeOnly() : TimeOnly.FromDateTime(Convert.ToDateTime(fields[5]));
+                            day.Awake               = fields[6].IsNullOrEmpty() ? new TimeOnly() : TimeOnly.FromDateTime(Convert.ToDateTime(fields[6]));
                             //Skip 7
-                            Sessions = Convert.ToInt32(fields[8]),
-                            Asleep = TimeOnly.FromDateTime(Convert.ToDateTime(fields[9])),
-                            AsleepAverage = TimeOnly.FromDateTime(Convert.ToDateTime(fields[10])),
-                            Efficiency = Convert.ToDouble(fields[11]),
-                            EfficiencyAverage = Convert.ToDouble(fields[12]),
-                            Quality = TimeOnly.FromDateTime(Convert.ToDateTime(fields[13])),
-                            QualityAverage = TimeOnly.FromDateTime(Convert.ToDateTime(fields[14])),
-                            Deep = TimeOnly.FromDateTime(Convert.ToDateTime(fields[15])),
-                            DeepAverage = TimeOnly.FromDateTime(Convert.ToDateTime(fields[16])),
-                            SleepBPM = Convert.ToDouble(fields[17]),
-                            SleepBPMAverage = Convert.ToDouble(fields[18]),
-                            DayBPM = Convert.ToDouble(fields[19]),
-                            DayBPMAverage = Convert.ToDouble(fields[20]),
-                            WakeingBPM = Convert.ToDouble(fields[21]),
-                            WakeingBPMAverage = Convert.ToDouble(fields[22]),
-                            HRV = Convert.ToInt32(fields[23]),
-                            HRVAverage = Convert.ToInt32(fields[24]),
-                            SleepHRV = Convert.ToInt32(fields[25]),
-                            SleepHRVAverage = Convert.ToInt32(fields[26]),
-                            SPO2Average = Convert.ToDouble(fields[27]),
-                            SPO2Min = Convert.ToInt32(fields[28]),
-                            SPO2Max = Convert.ToInt32(fields[29])
+                            day.Sessions            = Convert.ToInt32(DataDefaultUtils.StringDefault(fields[8], "0"));
+                            day.Asleep              = fields[9].IsNullOrEmpty() ? new TimeOnly() : TimeOnly.FromDateTime(Convert.ToDateTime(fields[9]));
+                            day.AsleepAverage       = fields[10].IsNullOrEmpty() ? new TimeOnly():TimeOnly.FromDateTime(Convert.ToDateTime(fields[10]));
+                            day.Efficiency          = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[11],"0"));
+                            day.EfficiencyAverage   = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[12],"0"));
+                            day.Quality             = fields[13].IsNullOrEmpty() ? new TimeOnly():TimeOnly.FromDateTime(Convert.ToDateTime(fields[13]));
+                            day.QualityAverage      = fields[14].IsNullOrEmpty() ? new TimeOnly():TimeOnly.FromDateTime(Convert.ToDateTime(fields[14]));
+                            day.Deep                = fields[15].IsNullOrEmpty() ? new TimeOnly():TimeOnly.FromDateTime(Convert.ToDateTime(fields[15]));
+                            day.DeepAverage         = fields[16].IsNullOrEmpty() ? new TimeOnly():TimeOnly.FromDateTime(Convert.ToDateTime(fields[16]));
+                            day.SleepBPM            = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[17], "0"));
+                            day.SleepBPMAverage     = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[18], "0"));
+                            day.DayBPM              = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[19], "0"));
+                            day.DayBPMAverage       = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[20], "0"));
+                            day.WakeingBPM          = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[21], "0"));
+                            day.WakeingBPMAverage   = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[22], "0"));
+                            day.HRV                 = Convert.ToInt32(DataDefaultUtils.StringDefault(fields[23], "0"));
+                            day.HRVAverage          = Convert.ToInt32(DataDefaultUtils.StringDefault(fields[24], "0"));
+                            day.SleepHRV            = Convert.ToInt32(DataDefaultUtils.StringDefault(fields[25], "0"));
+                            day.SleepHRVAverage     = Convert.ToInt32(DataDefaultUtils.StringDefault(fields[26], "0"));
+                            day.SPO2Average         = Convert.ToDouble(DataDefaultUtils.StringDefault(fields[27], "0"));
+                            day.SPO2Min             = Convert.ToInt32(DataDefaultUtils.StringDefault(fields[28], "0"));
+                            day.SPO2Max             = Convert.ToInt32(DataDefaultUtils.StringDefault(fields[29], "0"));
                         };
                         //add it
                         autoSleepDays.Add(day);

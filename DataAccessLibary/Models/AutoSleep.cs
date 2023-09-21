@@ -230,28 +230,28 @@ namespace DataAccessLibary
                     }
                     else 
                     {
-                        query.Append(',');
+                        query.Append(",\n");
                     }
                     /*String formatting info
                      * https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings
                      */
-                    string line = string.Format("({0},({1}),(2),(3),(4),(5), (6),7,(8),(9),10,11,(12),(13),(14),(15), 16,17,18,19,20,21,22,23,24,25,26,27,28)",
+                    string line = string.Format("(('{0}'),('{1}'),('{2}'),('{3}'),('{4}'),('{5}'),('{6}'),{7},('{8}'),('{9}'),{10},{11},('{12}'),('{13}'),('{14}'),('{15}'),{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28})",
                         day.DateTimeOfInstance  .ToString("yyyy-MM-dd"),//0
                         day.FromDate            .ToString("yyyy-MM-dd"),//1
                         day.ToDate              .ToString("yyyy-MM-dd"),//2
-                        day.BedTime             .ToString("o"),         //3
-                        day.WakeTime            .ToString("o"),         //4
-                        day.InBed               .ToString("o"),         //5
-                        day.Awake               .ToString("o"),         //6
+                        day.BedTime             .ToString("yyyy-MM-dd hh:mm:ss"),     //3
+                        day.WakeTime            .ToString("yyyy-MM-dd hh:mm:ss"),     //4
+                        day.InBed               .ToString("hh:mm"),     //5
+                        day.Awake               .ToString("hh:mm"),     //6
                         day.Sessions            .ToString(),            //7
-                        day.Asleep              .ToString("o"),         //8
-                        day.AsleepAverage       .ToString("o"),         //9
+                        day.Asleep              .ToString("hh:mm"),     //8
+                        day.AsleepAverage       .ToString("hh:mm"),     //9
                         day.Efficiency          .ToString(),            //10
                         day.EfficiencyAverage   .ToString(),            //11
-                        day.Quality             .ToString("o"),         //12
-                        day.QualityAverage      .ToString("o"),         //13
-                        day.Deep                .ToString("o"),         //14
-                        day.DeepAverage         .ToString("o"),         //15
+                        day.Quality             .ToString("hh:mm"),     //12
+                        day.QualityAverage      .ToString("hh:mm"),     //13
+                        day.Deep                .ToString("hh:mm"),     //14
+                        day.DeepAverage         .ToString("hh:mm"),     //15
                         day.SleepBPM            .ToString(),            //16
                         day.SleepBPMAverage     .ToString(),            //17
                         day.DayBPM              .ToString(),            //18
@@ -266,6 +266,7 @@ namespace DataAccessLibary
                         day.SPO2Min             .ToString(),            //27
                         day.SPO2Max             .ToString()             //28
                         );
+                    query.Append(line);
                 }
                 cmd.CommandText = query.ToString();
                 cmd.Connection.Open();
