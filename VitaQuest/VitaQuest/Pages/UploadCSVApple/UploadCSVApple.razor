@@ -1,23 +1,29 @@
 ﻿@page "/UploadCSV"
 <PageTitle>Upload CSV</PageTitle>
 @inject VitaQuest.Services.CSVDataService CSVService
-<h3>
-    Read In CSV
-</h3>
 
+<div class="CSV">
+    <h3>Read In CSV</h3>
+    <div>
+        <p>Upload Apple Health CSV</p>
+        <InputFile @key=@(inputAppleFileId) OnChange="@SingleFileAppleHealthUploadAsync" />
+    </div>
 
-<p>Upload Apple Health CSV</p>
-<InputFile OnChange="@SingleFileAppleHealthUploadAsync" />
-
-<p>Upload Sleep CSV</p>
-<InputFile OnChange="@SingleFileSleepUploadAsync" />
-
-<button @onclick="@SubmitFilesAsync">Upload</button>
-
+    <div>
+        <p>Upload Sleep CSV</p>
+        <InputFile @key=@(inputAutoSleepFileId) OnChange="@SingleFileSleepUploadAsync" />
+    </div>
+    <div>
+        <button @onclick="@SubmitFilesAsync">Upload</button>
+    </div>
+</div>
 @code {
     // this runs on the server
     private string appleHealthData = "";
     private string sleepData = "";
+
+    private Guid inputAppleFileId = Guid.NewGuid();
+    private Guid inputAutoSleepFileId = Guid.NewGuid();
 
     private async Task SingleFileAppleHealthUploadAsync(InputFileChangeEventArgs e)
     {
@@ -43,11 +49,13 @@
         if (appleHealthData.Length >0)
         {   //send dont wait
             CSVService.processAppleFitnessDataAsync(appleHealthData);
+            inputAppleFileId = Guid.NewGuid();
         }
 
         if (sleepData.Length >0)
         {
             CSVService.processAutoSleepDataAsync(sleepData);
+            inputAutoSleepFileId = Guid.NewGuid();
         }
     }
 }
