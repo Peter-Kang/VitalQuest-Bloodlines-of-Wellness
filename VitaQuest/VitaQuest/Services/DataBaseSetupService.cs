@@ -2,14 +2,13 @@
 
 namespace VitaQuest.Services
 {
-    public class DataBaseSetupService
+    public class DataBaseSetup
     {
-        public DataBaseSetupService() { }
+        public DataBaseSetup() { }
 
         public void Setup() 
         {
-            SQLDataAccess sql = new SQLDataAccess();
-            sql.init();
+            new SQLDataAccess().init();
         }
     }
 }

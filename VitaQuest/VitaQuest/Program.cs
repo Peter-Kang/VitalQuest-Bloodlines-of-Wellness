@@ -12,8 +12,8 @@ builder.Services.AddServerSideBlazor();//Blazor app, can mix and match with razo
 builder.Services.AddSingleton<WeatherForecastService>();
 
 
-DataBaseSetupService service = new DataBaseSetupService();
-service.Setup();
+DataBaseSetup setupDB = new DataBaseSetup();
+setupDB.Setup();
 
 builder.Services.AddTransient<CSVDataService>();
 
